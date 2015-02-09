@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="重度級急救醫院網絡空床數預測系統"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="即時預測"
+            android:id="@+id/Forcast_button"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/latitude_text"
+            android:singleLine="true"
+            android:hint="緯度"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/longitude_text"
+            android:hint="經度"
+            android:focusableInTouchMode="false"
+            android:visibility="gone" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="動態更新"
+            android:id="@+id/start_updates_button"
+            android:onClick="startUpdatesButtonHandler" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止更新"
+            android:id="@+id/stop_updates_button"
+            android:onClick="stopUpdatesButtonHandler" />
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:clickable="false" />
+
+
+</LinearLayout>
