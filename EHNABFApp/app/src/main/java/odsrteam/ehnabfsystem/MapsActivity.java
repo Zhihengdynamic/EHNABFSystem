@@ -206,24 +206,9 @@ public class MapsActivity extends FragmentActivity implements
                         new LatLng(R, D));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AUSTRALIA, 150));
 
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(AUSTRALIA.getCenter(), 14));
 
-               /* Winlat=data.getDouble("latitude");
-                Winlon=data.getDouble("longitude");
-                Log.i(TAG, "DD:" + Winlat + " " + Winlon);
-
-                LatLngBounds AUSTRALIA = new LatLngBounds(
-                        new LatLng(Winlat, Winlon),
-                        new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude()));
-
-// Set the camera to the greatest possible zoom level that includes the
-// bounds
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AUSTRALIA, 10));
-                //mLastUpdateTimeTextView.setText(mLastUpdateTime);*/
              }
 
-
-            //Log.i(TAG, "请求结果:" + Resultstring);
         }
     };
 
@@ -438,9 +423,11 @@ public class MapsActivity extends FragmentActivity implements
         mMap.addMarker(new MarkerOptions()
                   .position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())).title("目前位置")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ambunance1)));
-        Forcast.getForcastResults(mCurrentLocation, handler,"H1");
-        Forcast.getForcastResults(mCurrentLocation, handler,"H2");
-        Forcast.getForcastResults(mCurrentLocation, handler,"H3");
+
+        for(int i=1;i<13;i++) {
+            String ID="H"+i;
+            Forcast.getForcastResults(mCurrentLocation, handler, ID);
+        }
 
 
     }
@@ -522,10 +509,6 @@ public class MapsActivity extends FragmentActivity implements
 
             mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
             mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }else{
-            Log.i(TAG, "ｅｅｅ");
-            if(mGoogleApiClient!=null)
-                Log.i("run", "OKＥＥＥ");
         }
 
         if (mCurrentLocation == null) {
@@ -573,11 +556,5 @@ public class MapsActivity extends FragmentActivity implements
         Toast.makeText(this, marker.getTitle(), Toast.LENGTH_LONG).show();
     }
 
-    /*private void addMarker(GoogleMap map, double lat, double lon,
-                           int title, int snippet) {
-        map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
-                .title(getString(title))
-                .snippet(getString(snippet)));
-    }*/
 }
 

@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class InfluxDBShop {
 
     protected static final String TAG = "InfluxDBShop";
-    protected final static String HOST="http://grainflux.cloudapp.net:8086";
+    protected final static String HOST="http://59.126.164.5:8086";
     protected final static String DBNAME="ERFdb";
     Map<String, HPInfo> RealHPname = null;
 
@@ -51,9 +51,18 @@ public class InfluxDBShop {
 
     public InfluxDBShop(){
         RealHPname = new HashMap<String, HPInfo>();
-        RealHPname.put("H1", new HPInfo("台北榮民總醫院",25.1201836,121.5201598));
-        RealHPname.put("H2", new HPInfo("林口長庚醫院",25.0618495,121.3676923));
-        RealHPname.put("H3", new HPInfo("台中榮民總醫院",24.183744, 120.60371));
+        RealHPname.put("H1", new HPInfo("台北榮民總醫院",25.1201836,121.5201598 ));
+        RealHPname.put("H2", new HPInfo("林口長庚醫院", 25.0618495,  121.3676923));
+        RealHPname.put("H3", new HPInfo("台中榮民總醫院",    24.183744,   120.60371));
+        RealHPname.put("H4", new HPInfo("台北市立萬芳醫院",    24.9996897,  121.5575845));
+        RealHPname.put("H5", new HPInfo("國立成功大學醫學院附設醫院",    23.0021803,  120.2189867));
+        RealHPname.put("H6", new HPInfo("花蓮慈濟醫院",    23.9950092,  121.5923675));
+        RealHPname.put("H7", new HPInfo("三軍總醫院附設民眾診療服務處",    25.054373,   121.557672));
+        RealHPname.put("H8", new HPInfo("秀傳紀念醫院",    24.0647705,  120.5374429));
+        RealHPname.put("H9", new HPInfo("彰化基督教醫院",    24.0715309,  120.5446075));
+        RealHPname.put("H10", new HPInfo("高雄榮民總醫院",    22.6797317,  120.3223833));
+        RealHPname.put("H11", new HPInfo("高雄醫學大學附設中和紀念醫院",    22.6477347,  120.310416));
+        RealHPname.put("H12", new HPInfo("童綜合醫院",    24.2472297,  120.5428236));
 
     }
 
@@ -114,7 +123,6 @@ public class InfluxDBShop {
             InfluxDB influxDB=initInfluxDBConnect();
             //List<Serie> result = influxDB.query(DBNAME, "select flownum, HpF_ICU from "+ hName+" where time < now()+2h group by flownum order asc", TimeUnit.MILLISECONDS);
             List<Serie> result = influxDB.query(DBNAME, "select * from "+ hName+" where time < now()+2h group by flownum order asc", TimeUnit.MILLISECONDS);
-            //Log.i(TAG, "２");
 
             Serie tmpSerie=result.get(0);
 
@@ -133,8 +141,6 @@ public class InfluxDBShop {
                 value[2]=(Double)tmpSerie.getRows().get(i).get("HpF_BED");
                 value[3]=(Double)tmpSerie.getRows().get(i).get("time");
 
-                //Log.i(TAG, Ftime+" "+value[0]+" "+value[1]+" "+value[2]+" "+value[3]);
-
                 data.putDoubleArray(Ftime, value);
 
             }
@@ -144,31 +150,8 @@ public class InfluxDBShop {
             data.putDouble("latitude", RealHPname.get(hName).getlatitude());
             data.putDouble("longitude", RealHPname.get(hName).getlongitude());
 
-
-
-
-            //Log.i(TAG,data.toString());
-
-            //double[] tmp=data.getDoubleArray("20.0");
-            //long unixmilliSeconds = (long)tmp[3];
-            //Date date = new Date(unixmilliSeconds); // *1000 is to convert seconds to milliseconds
-
-            //sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
-            /*String formattedDate = sdf.format(new Date((long)tmp[3]));
-            Log.i(TAG, String.format("\n%s\t%.2f\t%.2f\t%.2f", formattedDate, tmp[0], tmp[1], tmp[2]));
-
-            tmp=data.getDoubleArray("40.0");
-            formattedDate = sdf.format(new Date((long)tmp[3]));
-            Log.i(TAG, String.format("\n%s\t%.2f\t%.2f\t%.2f", formattedDate, tmp[0], tmp[1], tmp[2]));
-
-            tmp=data.getDoubleArray("60.0");
-            formattedDate = sdf.format(new Date((long)tmp[3]));
-            Log.i(TAG, String.format("\n%s\t%.2f\t%.2f\t%.2f", formattedDate, tmp[0], tmp[1], tmp[2]));
-*/
-
-            //Log.i(TAG, "４");
             msg.setData(data);
-            //Log.i(TAG, "５");
+
             handler.sendMessage(msg);
         }
     }
@@ -209,21 +192,13 @@ public class InfluxDBShop {
         try {
 
             JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-
             JSONArray array = jsonObject.getJSONArray("routes");
-
             JSONObject routes = array.getJSONObject(0);
-
             JSONArray legs = routes.getJSONArray("legs");
-
             JSONObject steps = legs.getJSONObject(0);
-
             JSONObject distance = steps.getJSONObject("distance");
-
             JSONObject duration = steps.getJSONObject("duration");
 
-            //Log.i("Distance", distance.toString());
-            //dist = Double.parseDouble(distance.getString("text").replaceAll("[^\\.0123456789]","") );
             dist = distance.getString("text");
             time= duration.getLong("value");
 

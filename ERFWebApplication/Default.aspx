@@ -10,7 +10,7 @@
     </h2>
     
     <p>
-         <input type="text" size="60" name="address" value="Taichuang" />
+         <input type="text" size="60" name="address" value="台中" />
          <input type="submit" value="Go!" />
     </p>
     <div id="warnings_panel"></div>

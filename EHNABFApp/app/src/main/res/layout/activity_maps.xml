@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="即時預測"
             android:id="@+id/Forcast_button"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"

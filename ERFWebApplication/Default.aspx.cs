@@ -11,38 +11,54 @@ namespace ERFWebApplication
 {
     public partial class _Default : System.Web.UI.Page
     {
+        struct HINFO
+        {
+            public string Name;
+            public double Latitude;
+            public double Longitude;
+            public HINFO(string Name, double Latitude, double Longitude)
+            {
+                this.Name = Name;
+                this.Latitude=Latitude;
+                this.Longitude=Longitude;
+            }
+           
+        };
+        static HINFO[] hInfo =
+            new HINFO[]{
+                new HINFO( "台北榮民總醫院",25.1201836,121.5201598 ),                  
+                new HINFO("林口長庚醫院",    25.0618495,  121.3676923),                
+                new HINFO("台中榮民總醫院",    24.183744,   120.60371),                
+                new HINFO("台北市立萬芳醫院",    24.9996897,  121.5575845),            
+                new HINFO("國立成功大學醫學院附設醫院",    23.0021803,  120.2189867),  
+                new HINFO("花蓮慈濟醫院",    23.9950092,  121.5923675),                
+                new HINFO("三軍總醫院附設民眾診療服務處",    25.054373,   121.557672), 
+                new HINFO("秀傳紀念醫院",    24.0647705,  120.5374429),                
+                new HINFO("彰化基督教醫院",    24.0715309,  120.5446075),              
+                new HINFO("高雄榮民總醫院",    22.6797317,  120.3223833),              
+                new HINFO("高雄醫學大學附設中和紀念醫院",    22.6477347,  120.310416), 
+                new HINFO("童綜合醫院",    24.2472297,  120.5428236)                   
+            };
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            InfluxDBClient influxDB = new InfluxDBClient("grainflux.cloudapp.net", 8086, "ERFadmin", "eRfe19", "ERFdb");
-            
+            InfluxDBClient influxDB = new InfluxDBClient("59.126.164.5", 8086, "ERFadmin", "eRfe19", "ERFdb");
+          
             DataSet info=new DataSet();
 
-            
-            DataRow workRow = info.Locations.NewRow();
+            for (int i = 0; i < hInfo.Length; i++)
+            {
+                string hID = "H" + (i + 1);
+                DataRow workRow = info.Locations.NewRow();
+                workRow["ID"] = hID;
+                workRow["Name"] = hInfo[i].Name;
+                workRow["Latitude"] = hInfo[i].Latitude;
+                workRow["Longitude"] = hInfo[i].Longitude;
+                workRow["HTMLcontent"] = new String(getBedHTMLInfo(influxDB, hID).ToCharArray());
+                info.Locations.Rows.Add(workRow);
 
-            workRow["ID"] = "H1";
-            workRow["Name"] = "台北榮民總醫院";
-            workRow["Latitude"] = 25.1201836;
-            workRow["Longitude"] = 121.5201598;
-            workRow["HTMLcontent"] = new String(getBedHTMLInfo(influxDB, "H1").ToCharArray());
-            info.Locations.Rows.Add(workRow);
-
-            DataRow workRow1 = info.Locations.NewRow();
-            workRow1["ID"] = "H2";
-            workRow1["Name"] = "林口長庚醫院";
-            workRow1["Latitude"] = 25.0618495;
-            workRow1["Longitude"] = 121.3676923;
-            workRow1["HTMLcontent"] = new String(getBedHTMLInfo(influxDB, "H2").ToCharArray());
-            info.Locations.Rows.Add(workRow1);
-
-            DataRow workRow2 = info.Locations.NewRow();
-            workRow2["ID"] = "H3";
-            workRow2["Name"] = "台中榮民總醫院";
-            workRow2["Latitude"] = 24.183744;
-            workRow2["Longitude"] = 120.60371;
-            workRow2["HTMLcontent"] = new String(getBedHTMLInfo(influxDB, "H3").ToCharArray());
-            info.Locations.Rows.Add(workRow2);
+            }
+           
 
             PutHospitalMark(info.Locations);
             
@@ -52,21 +68,7 @@ namespace ERFWebApplication
         private String getBedHTMLInfo(InfluxDBClient influxDB, String hID)
         {
 
-            /*    0==> time:1423139131720 
-             1==> sequence_number:333150001 
-             2==> HpF_BED_Upper:11 
-               3==> HpF_WARN:11.8666667938232 
-             4==> HpF_WARN_Lower:11.6717901229858 
-             5==> HpF_WARN_Upper:12.0615425109863 
-             6==> flownum:1423137920519 
-               7==> Forecast_Time:20 
-               8==> HpF_ICU:12 
-             9==> HpF_ICU_Lower:12 
-             10==> HpF_ICU_Upper:12 
-               11==> HpF_BED:11 
-             12==> HpF_BED_Lower:11
-            */
-
+           
             String HPInfoTableHead = @"'<table style=""width:100%"">'+
                                  '<tr>'+
                                     '<th>預測時間</th>'+
@@ -158,7 +160,8 @@ namespace ERFWebApplication
                 //    " map.addOverlay(new GMarker(new GLatLng(" + Latitude + "," + Longitude + ")));";
                 mID++;
                 string MId = "hospMarker[" + (mID-1)+"]";
-                string infowindowId = "infowindow" + mID;
+                string infowindowId = "infowindow[" + (mID - 1) + "]";
+                //string infowindowId = "infowindow" + mID;
                 String Locations = Environment.NewLine + MId+@"=new google.maps.Marker({
                          position: new google.maps.LatLng(" + Latitude + "," + Longitude + @"),
                          map: map,
@@ -173,7 +176,8 @@ namespace ERFWebApplication
       '<div id=""bodyContent"">'+" + r["HTMLcontent"] +@"+
       '</div>'+
       '</div>';";
-                Locations += "var " + infowindowId + @"= new google.maps.InfoWindow({
+                Locations += Environment.NewLine + infowindowId + @"= new google.maps.InfoWindow({
+                
                                     content: contentString
                              });";
                 //Locations += "google.maps.event.addListener(" + MId + ", 'mouseover', function() {" +
@@ -181,7 +185,8 @@ namespace ERFWebApplication
                                 
                 //             });";
                 Locations += "google.maps.event.addListener(" + MId + ", 'click', function() {" +
-                                infowindowId + ".open(map," + MId + @");
+                                //infowindowId + ".open(map," + MId + @");
+                                "showMarkerInfo(" + infowindowId + "," + MId + @");
                                 showRoute(" + MId + @"); 
                              });";
                 //Locations += "google.maps.event.addListener(" + MId + ", 'mouseout', function() {" +
