@@ -1,0 +1,908 @@
+{
+  "id": null,
+  "title": "重度級急救醫院網絡空床數預測系統 (Emergency Healthcare Network Available Bed Forecasting System; EHNABF System)",
+  "originalTitle": "重度級急救醫院網絡空床數預測系統 (Emergency Healthcare Network Available Bed Forecasting System; EHNABF System)",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "title": "系統介紹",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "text",
+          "id": 30,
+          "mode": "html",
+          "content": "<table cellspacing=\"0\" cellpadding=\"5\" border=\"0\">\n<tr>\n  <td Width=\"70%\" valign=\"top\"><font size=\"3\">　　為提高醫療網救護之品質及安全， 本系統考慮系統動態流程的觀念，快速地即時反應網絡內各醫院之病患相互轉院影響之動態病床使用資訊。網絡醫院病床預測資訊己考慮時間的概念，將可提高病床資訊的精準度，使病患到院後確切有病床的機率提高，也更有效率的資源分配規畫。本系統有以下特色：\n<UL style=\"list-style-type:circle\">\n<LI>可預測及顯示醫院各類空床數量資訊在未來20, 40, 60分鐘等區間。\n<LI>提高資訊的精準度→醫院資訊考慮”時間”的概念，病患到院後確切有空床的機率提高。\n<LI>更有效率的資源規畫→若傷病情況超乎該院醫療資源或能力可以處置，則可盡早轉介至其他醫療院所或醫學中心，以節省時間。\n<LI>系統動態流程的觀念→快速地反應網絡內各醫院之病患相互轉院影響之空床數量資訊變化。\n</UL>\n</font>\n\n<P ALIGN=LEFT> 累計瀏覽人數：<img src=\"http://counter1.fc2.com/counter_img.php?id=27501949&main=1\" /></p>\n\n</td>\n<td bgcolor=\"#FFFFFF\" Width=\"30%\" align=\"left\" valign=\"bottom\" >\n\n<FONT COLOR=black>\n<img src=\"img/logo2.jpg\" width=\"75%\" /><br/>\n最佳決策系統研究團隊\n<UL style=\"list-style-type:circle\">\n<LI>東海大學工業工程與經營資訊系 <a href=\"http://web.thu.edu.tw/sjweng/www/\" target=\"_blank\" style=\"color: #CC0000\">翁紹仁</a>老師\n<LI>弘光科技大學資訊工程系 <a href=\"http://csie.hk.edu.tw/info/73\" target=\"_blank\" style=\"color: #CC0000\">徐永煜</a>老師\n<LI>台中榮民總醫院嘉義分院 <a href=\"http://www.vhcy.gov.tw/vhcy/index.php?module=CurerInfo&action=user_detail&sn=693\" target=\"_blank\" style=\"color: #CC0000\">王立敏</a>副院長（前中區緊急醫療應變中心執行長）\n</UL>\n</FONT>\n</td>\n\n</tr>\n</table>\n\n",
+          "style": {},
+          "links": [],
+          "height": "28"
+        }
+      ],
+      "showTitle": false
+    },
+    {
+      "title": "台北榮民總醫院",
+      "height": "250px",
+      "editable": false,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 22,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "thresholdLine": false
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H1",
+              "query": "select flownum, HpF_WARN from \"H1\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H1",
+              "query": "select flownum, HpF_WARN_Lower from \"H1\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "hide": false,
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H1",
+              "query": "select flownum, HpF_WARN_Upper from \"H1\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "hide": false,
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "加護病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 23,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H1",
+              "query": "select flownum, HpF_ICU from \"H1\" where $timeFilter  and time < now()+2h group by flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H1",
+              "query": "select flownum, HpF_ICU_Lower from \"H1\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H1",
+              "query": "select flownum, HpF_ICU_Upper from \"H1\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "急診室",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 19,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H1",
+              "query": "select flownum, HpF_BED from \"H1\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H1",
+              "query": "select flownum, HpF_BED_Lower from \"H1\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H1",
+              "query": "select flownum, HpF_BED_Upper from \"H1\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空推床數"
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "長庚醫療財團法人林口長庚紀念醫院",
+      "height": "250px",
+      "editable": false,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 24,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H2",
+              "query": "select flownum, HpF_WARN from \"H2\" where $timeFilter and time < now()+2h group by flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H2",
+              "query": "select flownum, HpF_WARN_Lower from \"H2\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H2",
+              "query": "select flownum, HpF_WARN_Upper from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "加護病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 25,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H2",
+              "query": "select flownum, HpF_ICU from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H2",
+              "query": "select flownum, HpF_ICU_Lower from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H2",
+              "query": "select flownum, HpF_ICU_Upper from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "急診室",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 26,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H2",
+              "query": "select flownum, HpF_BED from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H2",
+              "query": "select flownum, HpF_BED_Lower from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H2",
+              "query": "select flownum, HpF_BED_Upper from \"H2\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空推床數"
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "臺中榮民總醫院",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 27,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H3",
+              "query": "select flownum, HpF_WARN from \"H3\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H3",
+              "query": "select flownum, HpF_WARN_Lower from \"H3\" where $timeFilter and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H3",
+              "query": "select flownum, HpF_WARN_Upper from \"H3\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "加護病房",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 28,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H3",
+              "query": "select flownum, (HpF_ICU) from \"H3\" where $timeFilter and time < now()+2h group by flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H3",
+              "query": "select flownum, (HpF_ICU_Lower) from \"H3\" where $timeFilter and time < now()+2h group by flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H3",
+              "query": "select flownum, (HpF_ICU_Upper) from \"H3\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "title": "急診室",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 29,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H3",
+              "query": "select flownum, (HpF_BED) from \"H3\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H3",
+              "query": "select flownum, (HpF_BED_Lower) from \"H3\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H3",
+              "query": "select flownum, (HpF_BED_Upper) from \"H3\" where $timeFilter  and time < now()+2h group by  flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper  (95%信賴區間)",
+              "condition": "flownum='$LastForcast'",
+              "rawQuery": true
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空推床數"
+        }
+      ],
+      "showTitle": true
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "enable": false,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": false,
+      "notice": false
+    }
+  ],
+  "time": {
+    "from": "now-5m",
+    "to": "now+1h",
+    "now": false
+  },
+  "templating": {
+    "list": [],
+    "enable": false
+  },
+  "annotations": {
+    "list": [],
+    "enable": false
+  },
+  "refresh": "5m",
+  "version": 6,
+  "hideAllLegends": false
+}

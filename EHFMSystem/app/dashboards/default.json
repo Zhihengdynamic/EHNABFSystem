@@ -1,0 +1,1539 @@
+{
+  "id": null,
+  "title": "重度級急救醫院網絡急診預測系統",
+  "originalTitle": "重度級急救醫院網絡急診預測系統",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "title": "H1 空床預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 22,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H1",
+              "query": "select flownum, last(HpF_WARN) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean",
+              "condition": ""
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H1",
+              "query": "select flownum, last(HpF_WARN_Lower) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H1",
+              "query": "select flownum, last(HpF_WARN_Upper) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "加護病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 23,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H1",
+              "query": "select flownum, last(HpF_ICU) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H1",
+              "query": "select flownum, last(HpF_ICU_Lower) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H1",
+              "query": "select flownum, last(HpF_ICU_Upper) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "急診室推床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 19,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H1",
+              "query": "select flownum, last(HpF_BED) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H1",
+              "query": "select flownum, last(HpF_BED_Lower) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H1",
+              "query": "select flownum, last(HpF_BED_Upper) from \"H1\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "H2空床預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 24,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H2",
+              "query": "select flownum, last(HpF_WARN) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H2",
+              "query": "select flownum, last(HpF_WARN_Lower) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H2",
+              "query": "select flownum, last(HpF_WARN_Upper) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "加護病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 25,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H2",
+              "query": "select flownum, last(HpF_ICU) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H2",
+              "query": "select flownum, last(HpF_ICU_Lower) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H2",
+              "query": "select flownum, last(HpF_ICU_Upper) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "急診室推床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 26,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H2",
+              "query": "select flownum, last(HpF_BED) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H2",
+              "query": "select flownum, last(HpF_BED_Lower) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H2",
+              "query": "select flownum, last(HpF_BED_Upper) from \"H2\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "H3 空床預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "普通病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 27,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "H3",
+              "query": "select flownum, last(HpF_WARN) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Lower",
+              "series": "H3",
+              "query": "select flownum, last(HpF_WARN_Lower) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_WARN_Upper",
+              "series": "H3",
+              "query": "select flownum, last(HpF_WARN_Upper) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "加護病房空床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 28,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "H3",
+              "query": "select flownum, last(HpF_ICU) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Lower",
+              "series": "H3",
+              "query": "select flownum, last(HpF_ICU_Lower) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_ICU_Upper",
+              "series": "H3",
+              "query": "select flownum, last(HpF_ICU_Upper) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        },
+        {
+          "title": "急診室推床數",
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "id": 29,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": true,
+          "pointradius": 1,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "H3",
+              "query": "select flownum, last(HpF_BED) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "mean"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Lower",
+              "series": "H3",
+              "query": "select flownum, last(HpF_BED_Lower) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "lower"
+            },
+            {
+              "function": "last",
+              "column": "HpF_BED_Upper",
+              "series": "H3",
+              "query": "select flownum, last(HpF_BED_Upper) from \"H3\" where $timeFilter group by time($interval), flownum order asc",
+              "groupby_field": "flownum",
+              "interval": "20m",
+              "alias": "upper"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "普通病房空床數預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": true,
+      "panels": [
+        {
+          "id": 4,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "/H+/",
+              "query": "select last(HpF_WARN) from /H+/ where $timeFilter and Forecast_Time=20 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=20 and time<now()+1h",
+              "interval": "20m",
+              "alias": ""
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "20分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 5,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "/H+/",
+              "query": "select last(HpF_WARN) from /H+/ where $timeFilter and Forecast_Time=40 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=40 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "40分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 6,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_WARN",
+              "series": "/H+/",
+              "query": "select last(HpF_WARN) from /H+/ where $timeFilter and Forecast_Time=60 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=60 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "60分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "加護病房空床數預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": true,
+      "panels": [
+        {
+          "id": 13,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "/H+/",
+              "query": "select last(HpF_ICU) from /H+/ where $timeFilter and Forecast_Time=20 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=20 and time<now()+1h",
+              "interval": "20m",
+              "alias": ""
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "20分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 14,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "/H+/",
+              "query": "select last(HpF_ICU) from /H+/ where $timeFilter and Forecast_Time=40 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=40 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "40分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 15,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_ICU",
+              "series": "/H+/",
+              "query": "select last(HpF_ICU) from /H+/ where $timeFilter and Forecast_Time=60 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=60 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "60分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        }
+      ],
+      "showTitle": true
+    },
+    {
+      "title": "急診室推床數預測",
+      "height": "250px",
+      "editable": true,
+      "collapse": true,
+      "panels": [
+        {
+          "id": 16,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "/H+/",
+              "query": "select last(HpF_BED) from /H+/ where $timeFilter and Forecast_Time=20 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=20 and time<now()+1h",
+              "interval": "20m",
+              "alias": ""
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "20分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 17,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "/H+/",
+              "query": "select last(HpF_BED) from /H+/ where $timeFilter and Forecast_Time=40 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=40 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "40分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        },
+        {
+          "id": 18,
+          "span": 4,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "none",
+            "none"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": 0,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": true,
+            "total": false,
+            "avg": false,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true,
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "last",
+              "column": "HpF_BED",
+              "series": "/H+/",
+              "query": "select last(HpF_BED) from /H+/ where $timeFilter and Forecast_Time=60 and time<now()+1h group by time($interval) order asc",
+              "condition": "Forecast_Time=60 and time<now()+1h",
+              "interval": "20m"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "60分鐘後",
+          "datasource": "graphite",
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          },
+          "seriesOverrides": [],
+          "links": [],
+          "leftYAxisLabel": "空床數"
+        }
+      ],
+      "showTitle": true
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": false,
+      "notice": false
+    }
+  ],
+  "time": {
+    "from": "2014-12-25T15:00:37.395Z",
+    "to": "2014-12-25T17:40:37.395Z",
+    "now": false
+  },
+  "templating": {
+    "list": [],
+    "enable": false
+  },
+  "annotations": {
+    "list": [],
+    "enable": false
+  },
+  "refresh": false,
+  "version": 6,
+  "hideAllLegends": false
+}
