@@ -3,12 +3,15 @@
 
 body   
 {
-    background: #b6b7bc;
+    background: #000;/*#b6b7bc;*/
+   
+   
     font-size: .80em;
     font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
     margin: 0px;
     padding: 0px;
     color: #696969;
+  
 }
 
 a:link, a:visited
@@ -88,11 +91,14 @@ first child of the left and right table columns */
 
 .page
 {
-    width: 95%;/*960px;*/
+    width: 98%;/*960px;*/
     height: 100%;
     background-color: #fff;
-    margin: 20px auto 0px auto;
-    border: 1px solid #496077;
+    margin: 10px auto 0px auto;
+    margin: 0px auto 0px auto;
+    border: 0px solid #496077;
+    /*background-color: #161616;
+    color:#bbbfc2;*/
 }
 
 .header
@@ -100,19 +106,20 @@ first child of the left and right table columns */
     position: relative;
     margin: 0px;
     padding: 0px;
-    background: #4b6c9e;
+    background: #161616;/*#4b6c9e;*/
     width: 100%;
 }
 
 .header h1
 {
-    font-weight: 700;
+    font-weight: 500;
     margin: 0px;
-    padding: 0px 0px 0px 20px;
-    color: #f9f9f9;
+    padding: 0px 0px 0px 15px;
+    /*color: #f9f9f9;*/
     border: none;
     line-height: 2em;
-    font-size: 2em;
+    font-size: 1.6em;
+    color: Aqua;
 }
 
 .main
@@ -139,13 +146,21 @@ first child of the left and right table columns */
     line-height: normal;
 }
 
+iconStyle
+{
+    width: 24px; 
+    padding-top: 13px;
+    padding-right: 11px;
+    padding-bottom: 0px;   
+    padding-left: 0px;
+}
 
 /* TAB MENU   
 ----------------------------------------------------------*/
 
 div.hideSkiplink
 {
-    background-color:#3a4f63;
+    background-color:#161616;/*#3a4f63;*/
     width:100%;
 }
 
@@ -248,6 +263,16 @@ th, td {
 }
 
 
+#css_table {
+      display:table;
+  }
+.css_tr {
+      display: table-row;
+  }
+.css_td {
+      display: table-cell;
+  }
+
 /* Marker Information
 ----------------------------------------------------------*/
 #menu { 
@@ -278,6 +303,7 @@ th, td {
     float: left;
     text-align: left;
     width: auto;
+   
 }
 
 .loginDisplay

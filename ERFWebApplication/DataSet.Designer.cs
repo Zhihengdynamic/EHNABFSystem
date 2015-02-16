@@ -399,7 +399,7 @@ namespace ERFWebApplication {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public LocationsRow AddLocationsRow(string ID, string Name, float Latitude, float Longitude, string HTMLcontent) {
+            public LocationsRow AddLocationsRow(string ID, string Name, double Latitude, double Longitude, string HTMLcontent) {
                 LocationsRow rowLocationsRow = ((LocationsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
@@ -443,9 +443,9 @@ namespace ERFWebApplication {
                 base.Columns.Add(this.columnID);
                 this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnName);
-                this.columnLatitude = new global::System.Data.DataColumn("Latitude", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnLatitude = new global::System.Data.DataColumn("Latitude", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLatitude);
-                this.columnLongitude = new global::System.Data.DataColumn("Longitude", typeof(float), null, global::System.Data.MappingType.Element);
+                this.columnLongitude = new global::System.Data.DataColumn("Longitude", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLongitude);
                 this.columnHTMLcontent = new global::System.Data.DataColumn("HTMLcontent", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHTMLcontent);
@@ -623,10 +623,10 @@ namespace ERFWebApplication {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public float Latitude {
+            public double Latitude {
                 get {
                     try {
-                        return ((float)(this[this.tableLocations.LatitudeColumn]));
+                        return ((double)(this[this.tableLocations.LatitudeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("資料表 \'Locations\' 中資料行 \'Latitude\' 的值是 DBNull。", e);
@@ -639,10 +639,10 @@ namespace ERFWebApplication {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public float Longitude {
+            public double Longitude {
                 get {
                     try {
-                        return ((float)(this[this.tableLocations.LongitudeColumn]));
+                        return ((double)(this[this.tableLocations.LongitudeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("資料表 \'Locations\' 中資料行 \'Longitude\' 的值是 DBNull。", e);

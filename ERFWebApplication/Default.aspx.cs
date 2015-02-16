@@ -26,18 +26,18 @@ namespace ERFWebApplication
         };
         static HINFO[] hInfo =
             new HINFO[]{
-                new HINFO( "台北榮民總醫院",25.1201836,121.5201598 ),                  
-                new HINFO("林口長庚醫院",    25.0618495,  121.3676923),                
-                new HINFO("台中榮民總醫院",    24.183744,   120.60371),                
-                new HINFO("台北市立萬芳醫院",    24.9996897,  121.5575845),            
-                new HINFO("國立成功大學醫學院附設醫院",    23.0021803,  120.2189867),  
-                new HINFO("花蓮慈濟醫院",    23.9950092,  121.5923675),                
-                new HINFO("三軍總醫院附設民眾診療服務處",    25.054373,   121.557672), 
-                new HINFO("秀傳紀念醫院",    24.0647705,  120.5374429),                
-                new HINFO("彰化基督教醫院",    24.0715309,  120.5446075),              
-                new HINFO("高雄榮民總醫院",    22.6797317,  120.3223833),              
-                new HINFO("高雄醫學大學附設中和紀念醫院",    22.6477347,  120.310416), 
-                new HINFO("童綜合醫院",    24.2472297,  120.5428236)                   
+                new HINFO( "台北榮民總醫院",25.1201836d,121.5201598d),                  
+                new HINFO("林口長庚醫院",    25.0618495d,  121.3676923d),                
+                new HINFO("台中榮民總醫院",    24.183744d,   120.60371d),                
+                new HINFO("台北市立萬芳醫院",    24.9996897d,  121.5575845d),            
+                new HINFO("國立成功大學醫學院附設醫院",    23.0021803d,  120.2189867d),  
+                new HINFO("花蓮慈濟醫院",    23.9950092d,  121.59236750d),                
+                new HINFO("三軍總醫院附設民眾診療服務處",    25.054373d,   121.557672d), 
+                new HINFO("秀傳紀念醫院",    24.0647705d,  120.5374429d),                
+                new HINFO("彰化基督教醫院",    24.0715309d,  120.5446075d),              
+                new HINFO("高雄榮民總醫院",    22.6797317d,  120.3223833d),              
+                new HINFO("高雄醫學大學附設中和紀念醫院",    22.6477347d,  120.310416d), 
+                new HINFO("童綜合醫院",    24.2472297d,  120.5428236d)                   
             };
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,6 +63,25 @@ namespace ERFWebApplication
             PutHospitalMark(info.Locations);
             
    
+        }
+
+        /// <summary>
+        /// remove ViewState
+        /// </summary>
+        /// <param name="state"></param>
+        protected override void SavePageStateToPersistenceMedium(object state)
+        {
+            //base.SavePageStateToPersistenceMedium(state);
+        }
+
+        protected override object LoadPageStateFromPersistenceMedium()
+        {
+            return null; //return base.LoadPageStateFromPersistenceMedium();
+        }
+
+        protected override object SaveViewState()
+        {
+            return null;// base.SaveViewState();
         }
 
         private String getBedHTMLInfo(InfluxDBClient influxDB, String hID)
@@ -130,8 +149,14 @@ namespace ERFWebApplication
              
 
             js.Text = @"<script type='text/javascript'>
-                 geocoder = new google.maps.Geocoder();
-                 
+                 var geocoder = null;
+                 var map = null;
+                 var directionsService = null;
+                 var directionsDisplay;
+
+                 var hospMarker = [];
+                 var infowindow = [];
+                
                 
                  function initialize() {
                     var mapOptions = {
@@ -144,7 +169,9 @@ namespace ERFWebApplication
                         map: map,
                         suppressMarkers : true
                     };
-                    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);";
+                    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+                    geocoder = new google.maps.Geocoder(); 
+                    directionsService = new google.maps.DirectionsService(); ";
             int mID = 0;
             foreach (DataRow r in tbl.Rows)
             {
@@ -173,7 +200,7 @@ namespace ERFWebApplication
         '<li><img src=""img/ic_bed.png"" alt=""bed"" height=""42"" width=""42""></li>'+
         '<li><h1 id=""firstHeading"" class=""firstHeading"" >" + r["Name"] + @"<BR/></h1></li>'+
       '</ul>'+
-      '<div id=""bodyContent"">'+" + r["HTMLcontent"] +@"+
+      '<div id=""bodyContent"" style=""color:#000;"">'+" + r["HTMLcontent"] +@"+
       '</div>'+
       '</div>';";
                 Locations += Environment.NewLine + infowindowId + @"= new google.maps.InfoWindow({
