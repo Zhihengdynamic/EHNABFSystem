@@ -13,7 +13,7 @@ URL: http://140.128.135.12/ERFWeb/
 [衛服部網頁](http://www.mohw.gov.tw/CHT/DOMA/DM1_P.aspx?f_list_no=608&fod_list_no=4680&doc_no=43081)上記載之各醫院網頁急診即時資訊。
 
 ## 原始資料擷取腳本來源
-感謝[全國重度級急救責任醫院急診即時訊息](http://er.mohw.g0v.tw/#/dashboard/file/default.json)工作小組所公開的 web scraper script。
+感謝[全國重度級急救責任醫院急診即時訊息](http://er.mohw.g0v.tw/#/dashboard/file/default.json)網站工作小組所公開的 web scraper script。
 
 URL: https://ethercalc.org/twer
 
