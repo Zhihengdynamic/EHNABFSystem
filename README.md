@@ -28,12 +28,12 @@ URL: https://ethercalc.org/twer
   
   
           {
-              Hospital_ID: 醫院代號 (string),       
-              Basetime: 預測時當下時間 (timestamp),    
-              Forecast_Time: 預測多久後的空床數，以分鐘為單位 (int),       
-              HpF_BED: [lower, mean, upper ]  預測之推床空床數 (double),
-              HpF_ICU: [lower, mean, upper ]  預測之加護病房空床數 (double),
-              HpF_WARN: [lower, mean, upper ] 預測之普通病房空床數 (double)
+              "Hospital_ID": 醫院代號 (string),       
+              "Basetime": 預測時當下時間 (timestamp),    
+              "Forecast_Time": 預測多久後的空床數，以分鐘為單位 (int),       
+              "HpF_BED": [lower, mean, upper ]  預測之推床空床數 (double),
+              "HpF_ICU": [lower, mean, upper ]  預測之加護病房空床數 (double),
+              "HpF_WARN": [lower, mean, upper ] 預測之普通病房空床數 (double)
           }
 
 
