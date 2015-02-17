@@ -24,7 +24,7 @@ URL: https://ethercalc.org/twer
 
   METHOD: GET
 
-  Return: JSON format
+  Return:
   
   
           {
