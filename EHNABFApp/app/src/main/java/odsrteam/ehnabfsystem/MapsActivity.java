@@ -1,5 +1,6 @@
 package odsrteam.ehnabfsystem;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import 	java.util.Locale;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,6 +38,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 
 public class MapsActivity extends FragmentActivity implements
@@ -99,13 +109,18 @@ public class MapsActivity extends FragmentActivity implements
     InfluxDBShop Forcast;
 
     //Marker WinMark;
-    Long minDura;
+    protected Long[] minDura=null;
+    protected int[] minIdx=null;
+    protected Marker[] hMarker=null;
+    protected Long[] MPduration=null;
 
     // UI Widgets.
     protected Button mStartUpdatesButton;
     protected Button mStopUpdatesButton;
     protected TextView mLatitudeText=null;
     protected TextView mLongitudeText=null;
+    protected TextView mResultText=null;
+    protected Button[] mWinButton=null;
 
     //double Winlat;
     //double Winlon;
@@ -116,11 +131,19 @@ public class MapsActivity extends FragmentActivity implements
         setContentView(R.layout.activity_maps);
         // Locate the UI widgets.
         mStartUpdatesButton = (Button) findViewById(R.id.start_updates_button);
-        mStopUpdatesButton = (Button) findViewById(R.id.stop_updates_button);
+        //mStopUpdatesButton = (Button) findViewById(R.id.stop_updates_button);
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
 
+        mResultText=(TextView) findViewById((R.id.testTXT));
+        mWinButton=new Button[3];
+        mWinButton[0]=(Button) findViewById((R.id.buttonWin1));
+        mWinButton[1]=(Button) findViewById((R.id.buttonWin2));
+        mWinButton[2]=(Button) findViewById((R.id.buttonWin3));
 
+        //minDura =new Long[3];
+        //minIdx=new int[3];
+        //hMarker=new Marker[12];
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
         buildGoogleApiClient();
@@ -128,6 +151,10 @@ public class MapsActivity extends FragmentActivity implements
         Forcast =new InfluxDBShop();
         mRequestingLocationUpdates = false;
         mLastUpdateTime = "";
+        minDura=new Long[3];
+        minIdx=new int[3];
+        hMarker=new Marker[12];
+        MPduration=new Long[12];
 
         // Update values using data stored in the Bundle.
         updateValuesFromBundle(savedInstanceState);
@@ -138,7 +165,8 @@ public class MapsActivity extends FragmentActivity implements
         //Forcast.getForcastResults(handler,"H1");
         //Log.i(TAG, "Get:"+Resultstring);
         mStartUpdatesButton.setEnabled(true);
-        mStopUpdatesButton.setEnabled(false);
+        //mStopUpdatesButton.setEnabled(false);
+
     }
 
     Handler handler = new Handler(){
@@ -152,14 +180,17 @@ public class MapsActivity extends FragmentActivity implements
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); // the format of your date
 
 
+            int mID= data.getInt("mID");
+
             String HPtitle=data.getString("name");
             Long HPduration=data.getLong("duration"); //seconds
             String HPdistance=data.getString("distance");
 
+
             String ArriveTime= sdf.format(new Date(System.currentTimeMillis()+HPduration*1000));
 
 
-            String HPsnippet="預估到院時間: "+ArriveTime;
+            String HPsnippet="";
             HPsnippet+="\n預測時間  普通病床  加護病床  急診推床";
 
             double[] tmp=data.getDoubleArray("20.0");
@@ -174,43 +205,62 @@ public class MapsActivity extends FragmentActivity implements
             formattedDate = sdf.format(new Date((long)tmp[3]));
             HPsnippet+=String.format("\n%10s  %10.2f  %10.2f  %10.2f", formattedDate, tmp[0], tmp[1], tmp[2]);
 
+            //long arriaveTime =System.currentTimeMillis()+;
+            MPduration[mID]=HPduration*1000;
 
-            Marker tmpMark=mMap.addMarker(new MarkerOptions()
+
+
+
+            //Marker tmpMark=mMap.addMarker(new MarkerOptions()
+            hMarker[mID]=mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(data.getDouble("latitude"), data.getDouble("longitude")))
                     .title(HPtitle + " (" + HPdistance + ")")
                     .snippet(HPsnippet));
 
             //Log.i(TAG, "ｓｍａｌｌ:" + minDura+" "+HPduration);
-            if(HPduration<minDura){
-                minDura=HPduration;
-                tmpMark.showInfoWindow();
-                double L,R,U,D;
-                if(data.getDouble("latitude") < mCurrentLocation.getLatitude()) {
-                    L = data.getDouble("latitude");
-                    R = mCurrentLocation.getLatitude();
-                }else{
-                    R = data.getDouble("latitude");
-                    L = mCurrentLocation.getLatitude();
-                }
 
-                if(data.getDouble("longitude") < mCurrentLocation.getLongitude()) {
-                    U = data.getDouble("longitude");
-                    D = mCurrentLocation.getLongitude();
-                }else{
-                    D = data.getDouble("longitude");
-                    U = mCurrentLocation.getLongitude();
-                }
+            if(HPduration<minDura[0])  {
+                minDura[2]=minDura[1];
+                minDura[1]=minDura[0];
+                minDura[0]=HPduration;
+                minIdx[2]=minIdx[1];
+                minIdx[1]=minIdx[0];
+                minIdx[0]=mID;
 
-                LatLngBounds AUSTRALIA = new LatLngBounds(
-                        new LatLng(L, U),
-                        new LatLng(R, D));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AUSTRALIA, 150));
+                //showMarker(mID);
+                hMarker[mID].showInfoWindow();
+                if(mLastLocation!=null)
+                    moveBound(hMarker[mID].getPosition().longitude, hMarker[mID].getPosition().latitude,
+                        mLastLocation.getLongitude(), mLastLocation.getLatitude());
+
+                //String name=hMarker[minIdx[0]].getTitle().substring(0,hMarker[minIdx[0]].getTitle().indexOf('('));
+
+                mWinButton[0].setText(HPtitle);
+                mResultText.setText(HPtitle+"  預估行駛時間: "+
+                        sdf.format(new Date(HPduration*1000))+
+                        "  預估到院時間: "+ArriveTime );
+
+            }else if(HPduration<minDura[1]) {
+                minDura[2] = minDura[1];
+                minDura[1] = HPduration;
+                minIdx[2] = minIdx[1];
+                minIdx[1] = mID;
+                mWinButton[1].setText(HPtitle);
+            }else if(HPduration<minDura[2]){
+                minDura[2] = HPduration;
+                minIdx[2] = mID;
+                mWinButton[2].setText(HPtitle);
+            }
 
 
-             }
+
+
 
         }
     };
+
+
+
 
     /**
      * Updates fields based on data stored in the bundle.
@@ -225,7 +275,7 @@ public class MapsActivity extends FragmentActivity implements
             if (savedInstanceState.keySet().contains(REQUESTING_LOCATION_UPDATES_KEY)) {
                 mRequestingLocationUpdates = savedInstanceState.getBoolean(
                         REQUESTING_LOCATION_UPDATES_KEY);
-                setButtonsEnabledState();
+                setButtonsText();
             }
 
             // Update the value of mCurrentLocation from the Bundle and update the UI to show the
@@ -270,12 +320,15 @@ public class MapsActivity extends FragmentActivity implements
                     .getMap();
             mMap.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
             mMap.setOnInfoWindowClickListener(this);
+            setupMarkerListener();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
             }
         }
     }
+
+
 
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
@@ -286,6 +339,7 @@ public class MapsActivity extends FragmentActivity implements
     private void setUpMap() {
 
         if (mLastLocation != null){
+
             moveCamera(mLastLocation, ZOOM);
             LatLng tmp=new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             Marker tmpM=mMap.addMarker(new MarkerOptions().position(tmp).title("目前位置"));
@@ -364,9 +418,12 @@ public class MapsActivity extends FragmentActivity implements
     public void startUpdatesButtonHandler(View view) {
         if (!mRequestingLocationUpdates) {
             mRequestingLocationUpdates = true;
-            setButtonsEnabledState();
             startLocationUpdates();
+        }else{
+            mRequestingLocationUpdates = false;
+            stopLocationUpdates();
         }
+        setButtonsText();
     }
 
     /**
@@ -406,6 +463,18 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    private void setButtonsText() {
+        if (mRequestingLocationUpdates) {
+            //mStartUpdatesButton.setEnabled(false);
+            mStartUpdatesButton.setText("停止更新");
+            //mStopUpdatesButton.setEnabled(true);
+        } else {
+            //mStartUpdatesButton.setEnabled(true);
+            mStartUpdatesButton.setText("自動更新");
+            //mStopUpdatesButton.setEnabled(false);
+        }
+    }
+
     /**
      * Updates the latitude, the longitude, and the last location time in the UI.
      */
@@ -418,19 +487,79 @@ public class MapsActivity extends FragmentActivity implements
 
         //LatLng tmp=new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude());
 
-        minDura=100000000L;
+        for(int i=0;i<3;i++)
+            minDura[i]=100000000L;
 
         mMap.addMarker(new MarkerOptions()
                   .position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())).title("目前位置")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ambunance1)));
 
-        for(int i=1;i<13;i++) {
-            String ID="H"+i;
+
+        int [] candlist=selectCandicateHosptial(mCurrentLocation);
+
+        for(int i=0;i<10;i++) {
+            String ID="H"+candlist[i];
             Forcast.getForcastResults(mCurrentLocation, handler, ID);
+            //Log.d(TAG, " "+candlist[i]);
         }
+        mWinButton[0].setTextColor(Color.rgb(0, 150, 150));
 
 
     }
+
+    protected int[] selectCandicateHosptial(Location CurrentLocation) {
+        Map<String, HPInfo> RealHPname =Forcast.RealHPname;
+        HashMap<String, Double> hospDist= new HashMap<String, Double>();
+
+        for (int i = 0; i < RealHPname.size(); i++) {
+            String hName="H"+(i+1);
+            LatLng branch = new LatLng(RealHPname.get(hName).getlatitude(),RealHPname.get(hName).getlongitude());
+            double distance = distHaversine(CurrentLocation.getLatitude(),CurrentLocation.getLongitude() , branch);
+            //var distance = CurrentPosition.distanceFrom(branch);
+            hospDist.put(""+(i+1),distance);
+
+        }
+        //依距離進行排序
+        List<Map.Entry<String, Double>> list_Data =
+                new ArrayList<Map.Entry<String, Double>>(hospDist.entrySet());
+        Collections.sort(list_Data, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> entry1,
+                               Map.Entry<String, Double> entry2) {
+                return (int)(entry1.getValue() - entry2.getValue());
+            }
+        });
+
+        //var teststr = "";
+        int[] candlist =new int[RealHPname.size()];
+       int i=0;
+        for (Map.Entry<String, Double> entry:list_Data) {
+            candlist[i]=Integer.parseInt(entry.getKey());
+            i++;
+        }
+        return candlist;
+    }
+
+    protected double distHaversine(double lat, double lng, LatLng tMarker) {
+
+        int R = 6371; // earth's mean radius in km
+        double dLat = rad(tMarker.latitude - lat);
+        double dLong = rad(tMarker.longitude - lng);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(rad(lat)) * Math.cos(rad(tMarker.latitude))
+                        * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+
+        return d;
+    }
+
+    protected double rad(double x)
+    {
+        return x * Math.PI / 180;
+    }
+
+
 
     /**
      * Removes location updates from the FusedLocationApi.
@@ -445,6 +574,40 @@ public class MapsActivity extends FragmentActivity implements
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
+   public void win1buttonClick(View view){showMarker(minIdx[0]);}
+    public void win2buttonClick(View view){
+        showMarker(minIdx[1]);
+    }
+    public void win3buttonClick(View view){
+        showMarker(minIdx[2]);
+    }
+
+    protected void showMarker(int mIndex){
+        Marker marker=hMarker[mIndex];
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String name=marker.getTitle().substring(0,marker.getTitle().indexOf('(')-1);
+        mResultText.setText(name+"  預估行駛: "+
+                    (MPduration[mIndex]/60000)+"分"+(MPduration[mIndex]%60000)/1000+"秒"+
+                    "  預估到院時間: "+sdf.format(new Date(System.currentTimeMillis()+MPduration[mIndex])) );
+
+        for(int i=0;i<3;i++){
+            if(minIdx[i]==mIndex){
+                mWinButton[i].setTextColor(Color.rgb(0, 150, 150));
+            }else{
+                mWinButton[i].setTextColor(Color.BLACK);
+            }
+        }
+
+        if( marker.isInfoWindowShown() ) {
+            marker.hideInfoWindow();
+        } else {
+            marker.showInfoWindow();
+        }
+
+        moveBound(marker);
+
+
+    }
 
 
 
@@ -452,12 +615,21 @@ public class MapsActivity extends FragmentActivity implements
     protected void onResume() {
         super.onResume();
         //buildGoogleApiClient();
+
+        Log.i(TAG, " "+mCurrentLocation);
         setUpMapIfNeeded();
-        setButtonsEnabledState();
+        setButtonsText();
+
+
         if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
             startLocationUpdates();
            // updateUI();
+        }else if(mGoogleApiClient.isConnected()==false){
+            mGoogleApiClient.connect();
+//            startLocationUpdates();
         }
+
+
 
 
     }
@@ -479,7 +651,9 @@ public class MapsActivity extends FragmentActivity implements
     protected void onPause() {
         super.onPause();
         // Stop location updates to save battery, but don't disconnect the GoogleApiClient object.
-        stopLocationUpdates();
+        if (mGoogleApiClient.isConnected()) {
+            stopLocationUpdates();
+        }
     }
 
     /**
@@ -553,7 +727,76 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, marker.getTitle(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, marker.getTitle(), Toast.LENGTH_LONG).show();
+
+        //Log.d("EHNAF", "Clickinfo!!.");
+
+
+    }
+
+    private void setupMarkerListener() {
+        mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick( Marker marker ) {
+                //moveCamera();
+                //Log.d("EHNAF", "Click1!!.");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                for(int i=0;i<hMarker.length;i++)
+                {
+                    if(marker.equals(hMarker[i])) {
+                        //String ArriveTime= sdf.format(new Date(System.currentTimeMillis()+MPduration[i]));
+                        /*String name=marker.getTitle().substring(0,marker.getTitle().indexOf('(')-1);
+                        mResultText.setText(name+"  預估行駛: "+
+                                (MPduration[i]/60000)+"分"+(MPduration[i]%60000)/1000+"秒"+
+                                "  預估到院時間: "+sdf.format(new Date(System.currentTimeMillis()+MPduration[i])) );*/
+
+                        showMarker(i);
+
+                    }
+                }
+
+                /*if( marker.isInfoWindowShown() ) {
+                    marker.hideInfoWindow();
+                } else {
+                    marker.showInfoWindow();
+                }
+
+                moveBound(marker);*/
+
+                return true;
+            }
+        });
+    }
+
+    void moveBound(Marker m1) {
+
+        moveBound(m1.getPosition().longitude, m1.getPosition().latitude,
+                mLastLocation.getLongitude(), mLastLocation.getLatitude());
+
+    }
+
+    void moveBound(double lo1, double la1, double lo2, double la2){
+        double L,R,U,D;
+        if(la1 < la2) {
+            L = la1;
+            R = la2;
+        }else{
+            R = la1;
+            L = la2;
+        }
+
+        if(lo1 < lo2) {
+            U =lo1;
+            D = lo2;
+        }else{
+            D = lo1;
+            U = lo2;
+        }
+
+        LatLngBounds Mybounds = new LatLngBounds(
+                new LatLng(L, U),
+                new LatLng(R, D));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(Mybounds, 150));
     }
 
 }

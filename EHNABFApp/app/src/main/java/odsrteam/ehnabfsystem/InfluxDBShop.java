@@ -39,7 +39,7 @@ public class InfluxDBShop {
     protected static final String TAG = "InfluxDBShop";
     protected final static String HOST="http://59.126.164.5:8086";
     protected final static String DBNAME="ERFdb";
-    Map<String, HPInfo> RealHPname = null;
+    public Map<String, HPInfo> RealHPname = null;
 
     //public String Resultstring=null;
 
@@ -51,18 +51,18 @@ public class InfluxDBShop {
 
     public InfluxDBShop(){
         RealHPname = new HashMap<String, HPInfo>();
-        RealHPname.put("H1", new HPInfo("台北榮民總醫院",25.1201836,121.5201598 ));
-        RealHPname.put("H2", new HPInfo("林口長庚醫院", 25.0618495,  121.3676923));
-        RealHPname.put("H3", new HPInfo("台中榮民總醫院",    24.183744,   120.60371));
-        RealHPname.put("H4", new HPInfo("台北市立萬芳醫院",    24.9996897,  121.5575845));
-        RealHPname.put("H5", new HPInfo("國立成功大學醫學院附設醫院",    23.0021803,  120.2189867));
-        RealHPname.put("H6", new HPInfo("花蓮慈濟醫院",    23.9950092,  121.5923675));
-        RealHPname.put("H7", new HPInfo("三軍總醫院附設民眾診療服務處",    25.054373,   121.557672));
-        RealHPname.put("H8", new HPInfo("秀傳紀念醫院",    24.0647705,  120.5374429));
-        RealHPname.put("H9", new HPInfo("彰化基督教醫院",    24.0715309,  120.5446075));
-        RealHPname.put("H10", new HPInfo("高雄榮民總醫院",    22.6797317,  120.3223833));
-        RealHPname.put("H11", new HPInfo("高雄醫學大學附設中和紀念醫院",    22.6477347,  120.310416));
-        RealHPname.put("H12", new HPInfo("童綜合醫院",    24.2472297,  120.5428236));
+        RealHPname.put("H1", new HPInfo("台北榮民總醫院",25.1201836,121.5201598,0 ));
+        RealHPname.put("H2", new HPInfo("林口長庚醫院", 25.0618495,  121.3676923,1));
+        RealHPname.put("H3", new HPInfo("台中榮民總醫院",    24.183744,   120.60371,2));
+        RealHPname.put("H4", new HPInfo("台北市立萬芳醫院",    24.9996897,  121.5575845,3));
+        RealHPname.put("H5", new HPInfo("國立成功大學醫學院附設醫院",    23.0021803,  120.2189867,4));
+        RealHPname.put("H6", new HPInfo("花蓮慈濟醫院",    23.9950092,  121.5923675,5));
+        RealHPname.put("H7", new HPInfo("三軍總醫院附設民眾診療服務處",    25.054373,   121.557672,6));
+        RealHPname.put("H8", new HPInfo("秀傳紀念醫院",    24.0647705,  120.5374429,7));
+        RealHPname.put("H9", new HPInfo("彰化基督教醫院",    24.0715309,  120.5446075,8));
+        RealHPname.put("H10", new HPInfo("高雄榮民總醫院",    22.6797317,  120.3223833,9));
+        RealHPname.put("H11", new HPInfo("高雄醫學大學附設中和紀念醫院",    22.6477347,  120.310416,10));
+        RealHPname.put("H12", new HPInfo("童綜合醫院",    24.2472297,  120.5428236,11));
 
     }
 
@@ -149,6 +149,7 @@ public class InfluxDBShop {
             data.putString("name",RealHPname.get(hName).getname());
             data.putDouble("latitude", RealHPname.get(hName).getlatitude());
             data.putDouble("longitude", RealHPname.get(hName).getlongitude());
+            data.putInt("mID", RealHPname.get(hName).getID());
 
             msg.setData(data);
 
@@ -211,19 +212,22 @@ public class InfluxDBShop {
 }
 
 class HPInfo {
-    public HPInfo(String name, double latitude, double longitude) {
+    public HPInfo(String name, double latitude, double longitude, int ID) {
         this.name=name;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.ID=ID;
     }
 
     public String getname() { return this.name; }
     public double getlatitude() { return this.latitude; }
     public double getlongitude() { return this.longitude; }
+    public int getID() { return this.ID; }
 
     private String name;
     private double latitude;
     private double longitude;
+    private int ID;
 }
 
 

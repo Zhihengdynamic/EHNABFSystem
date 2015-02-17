@@ -9,9 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="重度級急救醫院網絡空床數預測系統"
+        android:text="重度級急救醫院網絡空床數預測APP"
         android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -50,15 +52,59 @@
             android:layout_height="wrap_content"
             android:text="動態更新"
             android:id="@+id/start_updates_button"
-            android:onClick="startUpdatesButtonHandler" />
+            android:onClick="startUpdatesButtonHandler"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="建議後送醫療機構"
+            android:id="@+id/textView2"
+            android:singleLine="false"
+            android:textSize="20dp"
+            android:textIsSelectable="false"
+            android:textColor="#ffff0000" />
+
+        <Space
+            android:layout_width="40px"
+            android:layout_height="20px" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="停止更新"
-            android:id="@+id/stop_updates_button"
-            android:onClick="stopUpdatesButtonHandler" />
+            android:text="New Button"
+            android:id="@+id/buttonWin1"
+            android:onClick="win1buttonClick" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/buttonWin2"
+            android:onClick="win2buttonClick" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/buttonWin3"
+            android:onClick="win3buttonClick"
+            android:nestedScrollingEnabled="false" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/testTXT"
+        android:autoText="false"
+        android:textColor="#ff00ffff"
+        android:background="#ff000000" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
