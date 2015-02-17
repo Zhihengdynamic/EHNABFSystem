@@ -7,12 +7,10 @@
 4. 系統動態流程的觀念→快速地反應網絡內各醫院之病患相互轉院影響之空床數量資訊變化。
 
 ## Website
-http://140.128.135.12/ERFWeb/
+URL: http://140.128.135.12/ERFWeb/
 
 ## 原始資料來源
-衛服部網頁上記載之各醫院網頁急診即時資訊。
-
-URL: http://www.mohw.gov.tw/CHT/DOMA/DM1_P.aspx?f_list_no=608&fod_list_no=4680&doc_no=43081
+[衛服部網頁](http://www.mohw.gov.tw/CHT/DOMA/DM1_P.aspx?f_list_no=608&fod_list_no=4680&doc_no=43081)上記載之各醫院網頁急診即時資訊。
 
 ## 原始資料擷取腳本來源
 感謝[全國重度級急救責任醫院急診即時訊息](http://er.mohw.g0v.tw/#/dashboard/file/default.json)工作小組所公開的 web scraper script。
