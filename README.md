@@ -8,6 +8,7 @@
 
 ## Website
 URL: http://140.128.135.12/ERFWeb/
+Azure Website: http://ehnabf.azurewebsites.net/
 
 ## 原始資料來源
 [衛服部網頁](http://www.mohw.gov.tw/CHT/DOMA/DM1_P.aspx?f_list_no=608&fod_list_no=4680&doc_no=43081)上記載之各醫院網頁急診即時資訊。
