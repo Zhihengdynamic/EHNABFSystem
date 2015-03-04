@@ -6,7 +6,7 @@
 3. 更有效率的資源規畫→若傷病情況超乎該院醫療資源或能力可以處置，則可盡早轉介至其他醫療院所或醫學中心，以節省時間。
 4. 系統動態流程的觀念→快速地反應網絡內各醫院之病患相互轉院影響之空床數量資訊變化。
 
-![default](https://cloud.githubusercontent.com/assets/8665480/6477006/54773e04-c258-11e4-8cf5-e97c9b5a5b1f.png)
+![default](https://cloud.githubusercontent.com/assets/8665480/6477030/ab7b93c6-c258-11e4-8451-a86d2168ff3e.png)
 ## Website
 URL: http://ehnabf.azurewebsites.net/
 
