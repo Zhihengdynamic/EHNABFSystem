@@ -17,7 +17,7 @@ URL: http://ehnabf.azurewebsites.net/
 ## 原始資料擷取腳本來源
 感謝[全國重度級急救責任醫院急診即時訊息](http://er.mohw.g0v.tw/#/dashboard/file/default.json)網站工作小組所公開的 web scraper script。
 
-URL: https://ethercalc.org/twer
+URL: https://github.com/g0v/er.mohw
 
 ## API
 本專案建立有Web API，提供查詢當下某時段後系統預測之醫院的空床數。
