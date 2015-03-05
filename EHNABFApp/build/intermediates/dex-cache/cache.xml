@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\classes-569ba1ee920e9e1d1f8cafb2b3786e7d31de2cb0.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-0242e03cd59fe7866a66bd4a95b67553c3e970c1.jar" />
+    </item>
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-498053365d27ef0c2858d46f9f0b000951d3e346.jar" />
+    </item>
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\libs\guava-18.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\guava-18.0-19daf7fd4d3bcd929ca4c2d1440bf8d2d5ee7108.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp\2.0.0\4c8d1536dba3812cc1592090dc20c47a4ed3c35e\okhttp-2.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4c8d1536dba3812cc1592090dc20c47a4ed3c35e">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\okhttp-2.0.0-687189f781e3921db2708d267712e9e6d0997ddf.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.0.0\2534c458682c73f5b9871131ab3098d3f987ca3\okio-1.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="02534c458682c73f5b9871131ab3098d3f987ca3">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\okio-1.0.0-48e05b5a542f7d60bd2e82361cb7d49075e47a34.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\gson-2.2.4-638dc86c58a101b5f4182ac80140d1d0cec9f422.jar" />
+    </item>
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\libs\retrofit-1.9.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-fa0ac7b0c71de1f08456013bb6a5aaf3b4c6d2d1.jar" />
+    </item>
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\classes-1a52d1c846f748e0ea89315cc450dcc9eebe9e9c.jar" />
+    </item>
+    <item
+        jar="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="D:\AndroidStudioProjects\EHNABFSystem\app\build\intermediates\pre-dexed\debug\classes-751a1ca6af2722f681e3d4e099ad86fbb88e7e52.jar" />
+    </item>
+
+</items>
