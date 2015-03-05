@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="534b3389-e26b-4c82-8e9a-3c149365fffd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://140.128.135.12/ERFService/ERFService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ERFService.xsd" MetadataType="Schema" ID="6e119c02-ee4f-4724-b004-09fbc3317ba0" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ERFService1.xsd" MetadataType="Schema" ID="a518876c-6a15-49e8-878c-bbec6f31ee5a" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ERFService.wsdl" MetadataType="Wsdl" ID="68652529-49a3-4282-a1ae-28b6a25b625b" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?wsdl" />
+    <MetadataFile FileName="ERFService.disco" MetadataType="Disco" ID="14a0e6b2-c6c2-4aa6-9e02-63114fb2eb63" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?disco" />
+    <MetadataFile FileName="ERFService2.xsd" MetadataType="Schema" ID="97901647-1a9b-4c8f-8c6b-3eb2f8f16020" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ERFService3.xsd" MetadataType="Schema" ID="763b398d-f0ee-4f02-9afc-5f688f41182d" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ERFService4.xsd" MetadataType="Schema" ID="b3025063-df9a-4b51-8d81-30776f64a962" SourceId="1" SourceUrl="http://140.128.135.12/ERFService/ERFService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,9 @@
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\ERFWebApplication.dll
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\ERFWebApplication.pdb
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\obj\Release\ERFWebApplication.dll
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\obj\Release\ERFWebApplication.pdb
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\InfluxDB.dll
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\Newtonsoft.Json.dll
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\InfluxDB.pdb
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\bin\Newtonsoft.Json.xml
+C:\Dropbox\TungHai\SpringSim15\Simul8WcfService\ERFWebApplication\obj\Release\ERFWebApplication.csprojResolveAssemblyReference.cache

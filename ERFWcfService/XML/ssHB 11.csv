@@ -1,0 +1,10 @@
+4
+hospital_name
+ARRIVAL
+TBA, Number
+1
+700, 1.0
+SERVICE
+TBA, Number, Time
+1
+720, 1.0, 720.0

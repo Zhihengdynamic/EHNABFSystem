@@ -1,0 +1,354 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ERFWebApplication.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <%--Google API reference--%>
+     <%--<script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAKS9zi8hXHYaRqwmH3pxSj3LHB7_AywPA&sensor=false">
+     </script>--%>
+     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+     <script type="text/javascript">
+
+         
+         var currentLocMarker = null;
+         
+         var candlist = [];
+         var hospDist = [];
+         var lastShowMarker = null;
+         var lastinfowindow = null;
+
+         //var bestdist = [];
+         var best1dist;
+         //var bestidx = [];
+         var Debug="";
+
+
+         
+         function showAddress(address) {
+             
+             if (geocoder) {
+                 geocoder.geocode({ 'address': address }, function (results, status) {
+                     if (status == google.maps.GeocoderStatus.OK) {
+
+                         map.setCenter(results[0].geometry.location);
+                         map.setZoom(10);
+                         //map.panTo(results[0].geometry.location);
+
+                         /*var marker = new google.maps.Marker({
+                         map: map,
+                         position: results[0].geometry.location
+                         });*/
+
+                         if (currentLocMarker != null) {
+                             currentLocMarker.setMap(null);
+                         }
+                         var CurrentPosition = results[0].geometry.location;
+                         currentLocMarker = new google.maps.Marker({
+                             position: CurrentPosition,
+                             map: map,
+                             icon: 'img/ambunance1.png',
+                             title: "目前位置"
+                         });
+
+                         //////////////Reset/////////////////////////////////////
+                         if (lastShowMarker != null) {
+                             lastinfowindow.close(map, lastShowMarker);
+                             lastShowMarker.setAnimation(null);
+                             lastShowMarker = null;
+                             lastinfowindow = null;
+                         }
+
+                         document.getElementById("warnings_panel").innerHTML = "";
+                         document.getElementById("test").innerHTML = "";
+                         Debug = ""
+
+                         //hospResp = [];
+
+                         for (index = 0; index < hospMarker.length; index++) {
+                             document.getElementById("Button" + index).style.display = "none";
+                             document.getElementById("Button" + index).style.backgroundColor = "#7FFF00";
+                         }
+                         document.getElementById("suggesttext").style.display = "none";
+                         //document.getElementById("abouttext").style.display = "none";
+
+
+                         /////////////////////////////////////////////////////////
+                         candlist = [];
+                         hospDist = [];
+                         selectCandicateHosptial(CurrentPosition);
+
+                         //bestdist = [10000, 10000, 10000];
+                         //bestidx=
+                         best1dist = 10000;
+                         hospDist = [];
+                         calcRoute(CurrentPosition);
+
+                     } else {
+                         alert("Geocode was not successful for the following reason: " + status);
+                     }
+                 });
+              }
+         }
+
+         function selectCandicateHosptial(CurrentPosition) {
+
+             
+
+            for (var i = 0; i < hospMarker.length; i++) {
+                var branch = hospMarker[i].getPosition();
+                var distance = distHaversine(branch, CurrentPosition);
+                //var distance = CurrentPosition.distanceFrom(branch);
+                hospDist.push({ name: i, val: distance });
+
+            }
+            //依距離進行排序
+            hospDist.sort(function (a, b) {
+                return a.val - b.val;
+            });
+            //var teststr = "";
+            for (i = 0; i < 6; i++) {
+                candlist[i] = hospDist[i].name;
+                //teststr += candlist[i] + ":" + hospMarker[candlist[i]].title+" ";
+            }
+
+            //Debug = "";
+
+            //Debug += hID + ":(" + candlist[hID] + " " + distance + ") ";
+
+            
+         }
+
+         //計算兩個經緯座標間的距離(Haversine公式)
+         function distHaversine(p1, p2) {
+             var rad = function (x) { return x * Math.PI / 180; }
+             var R = 6371; // earth's mean radius in km
+             var dLat = rad(p2.lat() - p1.lat());
+             var dLong = rad(p2.lng() - p1.lng());
+
+             var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat()))
+                        * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+             var d = R * c;
+
+             return parseFloat(d.toFixed(3));
+         }
+
+         
+         
+         //var hospResp = [];
+         function calcRoute(start) {
+
+             
+
+             hospitalroute(start, 0);
+             
+
+
+        }
+
+        var bestresponse;
+        
+        function hospitalroute(start, hID) {
+            var cID = candlist[hID];
+            var end = hospMarker[cID].getPosition();
+            
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+
+                    var myRoute = response.routes[0].legs[0];
+                    var duration = myRoute.duration.value;
+                    var distance = myRoute.distance.value;
+                    var end_location = myRoute.end_location;
+                    distance = distance / 1000.0;
+                    //var teststr = "Begin ";
+                    //var difference = 0.0000001;
+
+                    if (best1dist > distance) {
+                        best1dist = distance;
+                        bestresponse = response;
+                        var arriveTime = new Date(Date.now() + duration * 1000);
+                        document.getElementById("warnings_panel").innerHTML = hospMarker[cID].title + '    行駛距離：' + distance + ' km  預估行駛時間：' + (duration / 60).toFixed(1) + '分鐘  預估到院時間：' + arriveTime.toLocaleTimeString();
+
+                    }
+                    hospDist.push({ name: cID, val: distance });
+                    
+                    //hospResp[hID] = response;
+                    if (hID + 1 < candlist.length) {
+                        
+                        hospitalroute(start, hID + 1);
+                    } else {
+                        sortandShowdists();
+
+                    }
+                    
+                    
+
+                } else {
+                    Debug += hID + " " + hospMarker[cID].title + ":" + status;
+                    
+                }
+
+            });
+
+
+        }
+
+        function sortandShowdists() {
+            //var results = "B: ";
+            /*for (var index = 0; index < hospDist.length; index++) {
+                results += hospDist[index].val + " ";
+            }*/
+            var index;
+            var bounds = new google.maps.LatLngBounds();
+            hospDist.sort(function (a, b) {
+                return a.val - b.val;
+            });
+            for (index = 0; index < 3; index++) {
+                //results += hospDist[index].name + " ";
+                //infowindow[hospDist[index]].open(map, hospMarker[hospDist[index]]);
+                //document.getElementById("Button" + index).onclick = showselect("'infowindow'" + hospDist[index].name);
+                //document.getElementById("Button" + hospDist[index].name).innerHTML = hospMarker[hospDist[index].name].title;
+                document.getElementById("Button" + hospDist[index].name).style.display = "inline";
+                bounds.extend(hospMarker[hospDist[index].name].getPosition());
+
+            }
+            document.getElementById("suggesttext").style.display = "inline";
+
+            for (index = 0; index < hospMarker.length; index++) {
+                document.getElementById("Button" + index).style.backgroundColor = "#FFFFFF";
+            }
+            document.getElementById("Button" + hospDist[0].name).style.backgroundColor = "#7FFF00";
+
+            directionsDisplay.setDirections(bestresponse);
+            //if (lastShowMarker != null) {
+            //    lastinfowindow.close(map, lastShowMarker);
+            //}
+            showMarkerInfo(infowindow[hospDist[0].name], hospMarker[hospDist[0].name]);
+
+            document.getElementById("test").innerHTML = Debug;
+
+            //hospMarker[hospDist[index].name].setAnimation(google.maps.Animation.BOUNCE);
+            //lastShowMarker = hospMarker[hospDist[index].name];
+
+            //map.fitBounds(bounds);
+            //map.setCenter(bounds.getCenter());
+            //map.fitBounds(bounds);
+            //directionsDisplay.setDirections(bestresponse);
+            //document.getElementById("test").innerHTML = bounds.toString();
+        }
+
+
+        
+
+         function showinfoButtonclick(infowindowShow, MarkertoShow,e) {
+             showMarkerInfo(infowindowShow, MarkertoShow);
+             showRoute(MarkertoShow);
+             for (var index = 0; index < hospMarker.length; index++) {
+                 document.getElementById("Button" + index).style.backgroundColor = "#FFFFFF";
+             }
+             e.target.style.backgroundColor = "#7FFF00";
+         }
+
+         function showselect(idShow) {
+             document.getElementById("warnings_panel").innerHTML = "TT:" + idShow;
+         }
+             
+
+
+         function showMarkerInfo(infowindowShow, MarkertoShow) {
+             if (lastShowMarker != null) {
+                 lastinfowindow.close(map, lastShowMarker);
+                 lastShowMarker.setAnimation(null);
+             }
+             lastinfowindow = infowindowShow;
+             lastShowMarker = MarkertoShow;
+             lastinfowindow.open(map, lastShowMarker);
+             lastShowMarker.setAnimation(google.maps.Animation.BOUNCE);
+         }
+
+         
+
+         function showRoute(Markerdest) {
+
+             
+             if (currentLocMarker != null) {
+                 var bounds = new google.maps.LatLngBounds();
+                 bounds.extend(currentLocMarker.getPosition());
+                 bounds.extend(Markerdest.getPosition());
+                 
+                 var request = {
+                     origin: currentLocMarker.getPosition(),
+                     destination: Markerdest.getPosition(),
+                     travelMode: google.maps.TravelMode.DRIVING
+                 };
+
+                 directionsService.route(request, function (response, status) {
+                     if (status == google.maps.DirectionsStatus.OK) {
+                         var myRoute = response.routes[0].legs[0];
+                         var duration = myRoute.duration.value;
+                         var distance = myRoute.distance.value;
+                         distance = distance / 1000.0;
+                         directionsDisplay.setDirections(response);
+                         var arriveTime = new Date(Date.now() + duration * 1000);
+                         document.getElementById("warnings_panel").innerHTML = Markerdest.title+'  行駛距離：' + distance + ' km  預估行駛時間：' + (duration / 60).toFixed(1) + '分鐘  預估到院時間：' + arriveTime.toLocaleTimeString();
+                         //directionsDisplay.setDirections(response);
+                         
+                     }
+
+                 });
+                 for (index = 0; index < hospMarker.length; index++) {
+                     document.getElementById("Button" + index).style.backgroundColor = "#FFFFFF";
+                 }
+             }
+         }
+
+       
+
+    </script>
+</head>
+<body>
+    <form id="Form1" runat="server" action="#" onsubmit="showAddress(this.address.value); return false">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                   <img src="img/icon.png" style="width: 24px; padding-top: 13px; padding-right: 10px; padding-bottom: 0px;  padding-left: 0px;" alt="ODSM logo"/>重度級急救醫院網絡空床數預測系統 (Emergency Healthcare Network Available Bed Forecasting System; EHNABF System)
+               </h1>
+            </div>
+            
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Reload"/>
+                        <asp:MenuItem NavigateUrl="http://140.128.135.12/EHFMSystem" Text="Dashboard"/>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+   </form>  
+</body>
+</html>
