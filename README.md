@@ -23,7 +23,7 @@ URL: https://github.com/g0v/er.mohw
 ## API
 本專案建立有Web API，提供查詢當下某時段後系統預測之醫院的空床數。
 
-* URL: http://140.128.135.12/ERFSystem/ERFSystem.svc/Forcasting/time/ + 預測分鐘數
+* URL: http://erbedserver.cloudapp.net/ERFSystem/ERFSystem.svc/Forcasting/time/ + 預測分鐘數
 
   METHOD: GET
 
@@ -46,11 +46,15 @@ URL: https://github.com/g0v/er.mohw
 
 * 預測20分鐘後之醫院床數
 
-  URL: http://140.128.135.12/ERFSystem/ERFSystem.svc/Forcasting/time/20
+  URL: http://erbedserver.cloudapp.net/ERFSystem/ERFSystem.svc/Forcasting/time/20
 
 * 預測35分鐘後之醫院床數
 
-  URL: http://140.128.135.12/ERFSystem/ERFSystem.svc/Forcasting/time/35
+  URL: http://erbedserver.cloudapp.net/ERFSystem/ERFSystem.svc/Forcasting/time/35
+  
+備用：
+
+http://140.128.135.12/ERFSystem/ERFSystem.svc/Forcasting/time/ + 預測分鐘數
   
 ##Mobile app
 ![appqr](https://cloud.githubusercontent.com/assets/8665480/6476872/787ceea4-c256-11e4-8ef0-0cb7c970100c.png)
