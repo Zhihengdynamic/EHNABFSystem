@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EHNABF System</title>
+
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-touch-carousel/css/bootstrap-touch-carousel.css" />-->
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <form id="Form1" action="#" onsubmit="showAddress(this.address.value); return false">
+        <div class="page">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="header">
+                        <h1>
+                            <img src="~/images/icon.png" style="width: 24px; padding-top: 13px; padding-right: 10px; padding-bottom: 0px;  padding-left: 0px;" alt="ODSM logo" />重度級急救醫院網絡空床數預測系統 (Emergency Healthcare Network Available Bed Forecasting System; EHNABF System)
+                        </h1>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+            </div>
+            <script src="~/lib/jquery/jquery.js"></script>
+            <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+            <script src="~/lib/hammer.js/hammer.js"></script>
+            <script src="~/lib/bootstrap-touch-carousel/js/bootstrap-touch-carousel.js"></script>
+            @RenderSection("scripts", required: false)
+        </div>
+    </form>
+</body>
+</html>
