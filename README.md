@@ -8,7 +8,7 @@
 
 ![default](https://cloud.githubusercontent.com/assets/8665480/6477030/ab7b93c6-c258-11e4-8451-a86d2168ff3e.png)
 ## Website
-URL: http://ehnabf.azurewebsites.net/
+URL: http://bedforecasting.azurewebsites.net/
 
 備用: http://140.128.135.12/ERFWeb/
 
