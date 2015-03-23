@@ -1,24 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
+//using System.Threading.Timer;
+using System.Threading;
 
-namespace ERFWindowsService
+
+namespace ERFWinServiceNet5
 {
-    static class Program
+    public class Program
     {
-        /// <summary>
-        /// 應用程式的主要進入點。
-        /// </summary>
-        static void Main()
+ 
+        public void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-			{ 
-				new Service1() 
-			};
-            ServiceBase.Run(ServicesToRun);
+            
+            int perior = 20*60000; //20*60 seconds
+            int dueTime = 2000;
+            Console.WriteLine("Start...");
+            
+            AskService ask = new AskService(dueTime, perior);
+            
+            ask.timerRef = new System.Threading.Timer(
+                new System.Threading.TimerCallback(ask.RunForcasting),
+                null,
+                Timeout.Infinite,
+                Timeout.Infinite);
+
+            ask.start();
+
+            // The main thread does nothing until the timer is disposed.
+            while (true)
+                Thread.Sleep(1);
+            //Console.WriteLine("Timer example done.");
+
         }
+
+        
+
+        
     }
 }
